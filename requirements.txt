@@ -1,2 +1,4 @@
 pandas
 ccxt
+ruamel.yaml
+python-binance

@@ -3,7 +3,9 @@ FROM python:3.6.1-alpine
 RUN apk update \
   && apk add \
     build-base \
-    libpq
+    libpq \
+    openssl-dev \
+    libffi-dev
 
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app

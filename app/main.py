@@ -9,7 +9,10 @@ for item in exchangesClasses:
 def run(exchange):
     if (exchange.working == False):
         exchange.pull()
-        return exchange
+    else:
+        exchange.saveToCsv()
+    return exchange
+
 
 while True:
-    map(run, exchanges)
+    run(exchanges[0])

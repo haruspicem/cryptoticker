@@ -1,5 +1,6 @@
 from app.components.OrderBook import OrderBook
-
+import os
+import app.tools as tools
 
 class Exchange:
     # Basic class for all exchanges
@@ -35,5 +36,28 @@ class Exchange:
         print("data: {}".format(item))
 
     def saveToCsv(self):
+        # Save orderbook data to csv file
+        headers = [
+            'type',
+            'time',
+            'symbol',
+            'bids',
+            'ask',
+            'first_id',
+            'final_id',
+        ]
+        data = []
         for order in self.batch:
-            order.saveToCsv()
+            directory = '/data/' + self.exchange_name
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+            data.append([
+                order.type,
+                order.time,
+                order.symbol,
+                order.bids,
+                order.ask,
+                order.first_id,
+                order.final_id
+            ])
+        tools.append_to_csv(data, '/data/{}/order_book.csv'.format(self.exchange_name), columns=headers)

@@ -5,7 +5,7 @@ import app.tools as tools
 from app.exchanges.Exchange import Exchange
 from binance.client import Client
 from binance.websockets import BinanceSocketManager
-
+import pickle
 
 class ExchangeBinance(Exchange):
     exchange_name = 'binance'
@@ -51,10 +51,5 @@ class ExchangeBinance(Exchange):
                     'price': item[0],
                     'quantity': item[1],
                 })
+            result = pickle.dumps(result, 0).decode()
         return result
-
-
-
-
-test = ExchangeBinance()
-test.pull()

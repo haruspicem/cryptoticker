@@ -51,5 +51,5 @@ class ExchangeBinance(Exchange):
                     'price': item[0],
                     'quantity': item[1],
                 })
-            result = pickle.dumps(result, 0).decode()
+            result = pickle.dumps(result, 0)
         return result

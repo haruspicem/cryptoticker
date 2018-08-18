@@ -4,7 +4,7 @@ import os
 import sys
 
 def getConfig(config_name):
-    with open("../config/{}.yml".format(config_name), 'r') as stream:
+    with open("config/{}.yml".format(config_name), 'r') as stream:
         try:
             result = yaml.safe_load(stream)
             return result

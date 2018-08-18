@@ -1,2 +1,5 @@
 .idea
+data
+config
 *__init__*
+*__pycache__*

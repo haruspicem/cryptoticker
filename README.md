@@ -6,4 +6,7 @@ python 3.6+
 
 ````
 docker-compose up -d --build
+cp config_example config
 ````
+
+Then update configurations in .yml files

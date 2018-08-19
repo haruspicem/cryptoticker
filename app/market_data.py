@@ -1,7 +1,6 @@
-import ccxt
 import asyncio
 import os
-import ccxt.async as ccxt
+import ccxt.async_support as ccxt
 import pandas as pd
 import time
 from datetime import datetime
@@ -29,9 +28,9 @@ def append_to_csv(batch, path, sep=",", columns=['market', 'bids', 'asks', 'ts']
     """Append the provided dataframe to an existing one, else writes as new."""
     df = pd.DataFrame.from_records(batch, columns=columns)
     if not os.path.isfile(path):
-        df.to_csv(path, mode='a', index=False, sep=sep)
+        df.to_csv(path, mode='a', sep=sep)
     else:
-        df.to_csv(path, mode='a', index=False, sep=sep, header=False)
+        df.to_csv(path, mode='a', sep=sep, header=False)
 
 async def pool_exchange_data(exchange_name, currencies, batch_size=100, sleep_time=30):
     exchange = getattr(ccxt, exchange_name)()
@@ -41,7 +40,7 @@ async def pool_exchange_data(exchange_name, currencies, batch_size=100, sleep_ti
     async for orderbook in pool_order_book(exchange, markets, sleep_time):
         batch.append(orderbook)
         if(len(batch) > batch_size):
-            append_to_csv(batch, '{}_order_book.csv'.format(exchange_name))
+            append_to_csv(batch, '/data/{}_order_book.csv'.format(exchange_name))
             batch = []
 
 currencies = ['BTC', 'USDT', 'ETH', 'XRP', 'BCH', 'EOS', 'LTC', 'XLM', 'ADA', 'MIOTA', 'TRX', 'XMR', 'NEO', 'DASH']
@@ -50,7 +49,7 @@ asyncio.get_event_loop().run_until_complete( asyncio.gather(
      pool_exchange_data('binance', currencies),
      pool_exchange_data('bittrex', currencies),
      # pool_exchange_data('bitfinex2', currencies),
-     pool_exchange_data('huobipro', currencies),
-     pool_exchange_data('zb', currencies),
+     # pool_exchange_data('huobipro', currencies),
+     # pool_exchange_data('zb', currencies),
      #pool_exchange_data('bitmex', ['XBT', 'ADA', 'ETH', 'EOS', 'LTC', 'TRX', 'USD', 'XRP', 'BCH']),
 ))
